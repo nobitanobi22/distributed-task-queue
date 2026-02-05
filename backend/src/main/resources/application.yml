@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: distributed-task-queue
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taskqueue
+    username: admin
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: password
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 10
+        acknowledge-mode: auto
+        prefetch: 10
+  
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      jedis:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 2
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.taskqueue: DEBUG
+    org.springframework.amqp: INFO
+    org.hibernate.SQL: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+task-queue:
+  worker:
+    thread-pool-size: 10
+  retry:
+    max-attempts: 3
+    backoff-multiplier: 2
+    initial-interval: 2000
