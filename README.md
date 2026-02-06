@@ -2,17 +2,17 @@
 
 A production-grade distributed task queue with priority scheduling, automatic retry logic, and dead letter queue management. Built with Java Spring Boot, RabbitMQ, Redis, PostgreSQL, and React.
 
-## 🌟 Features
+## Features
 
-- ✅ **Priority Queue System** - HIGH, MEDIUM, LOW priority queues with RabbitMQ
-- ✅ **Automatic Retry Logic** - Exponential backoff with configurable max retries
-- ✅ **Dead Letter Queue** - Failed tasks after max retries moved to DLQ
-- ✅ **Real-time Monitoring** - WebSocket updates for task status
-- ✅ **Metrics Dashboard** - Success rate, processing time, queue depths
-- ✅ **Extensible Architecture** - Plugin-based task executors
-- ✅ **Production Ready** - Docker, Prometheus metrics, comprehensive testing
+-  **Priority Queue System** - HIGH, MIUM, LOW priority queues with RabbitMQ
+- **Automatic Retry Logic** - Exponential backoff with configurable max retries
+- **Dead Letter Queue** - Failed tasks after max retries moved to DLQ
+- **Real-time Monitoring** - WebSocket updates for task status
+- **Metrics Dashboard** - Success rate, processing time, queue depths
+- **Extensible Architecture** - Plugin-based task executors
+- **Production Ready** - Docker, Prometheus metrics, comprehensive testing
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Frontend (React + MUI) → REST API (Spring Boot) → RabbitMQ Queues → Workers
@@ -46,15 +46,6 @@ cd distributed-task-queue
 # Start PostgreSQL, Redis, RabbitMQ, Prometheus, and Grafana
 docker-compose up -d
 
-# Verify all services are running
-docker-compose ps
-
-# Check RabbitMQ Management UI: http://localhost:15672
-# Username: admin, Password: password
-
-# Check Grafana: http://localhost:3001
-# Username: admin, Password: admin
-```
 
 ### Step 3: Build and Run Backend
 
@@ -87,41 +78,7 @@ npm run dev
 # Frontend will start on http://localhost:3000
 ```
 
-### Step 5: Verify Everything is Working
-
-1. **Backend Health Check**:
-   ```bash
-   curl http://localhost:8080/api/actuator/health
-   ```
-
-2. **Submit a Test Task**:
-   ```bash
-   curl -X POST http://localhost:8080/api/tasks/submit \
-     -H "Content-Type: application/json" \
-     -d '{
-       "taskType": "EMAIL_SEND",
-       "priority": "HIGH",
-       "payload": {
-         "to": "test@example.com",
-         "subject": "Test Email",
-         "body": "Hello from Task Queue!"
-       },
-       "maxRetries": 3
-     }'
-   ```
-
-3. **Check Task Status**:
-   ```bash
-   # Use the taskId from the previous response
-   curl http://localhost:8080/api/tasks/{taskId}
-   ```
-
-4. **View Metrics**:
-   ```bash
-   curl http://localhost:8080/api/metrics
-   ```
-
-## 📊 Access Points
+## Access Points
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
@@ -165,6 +122,13 @@ distributed-task-queue/
 ├── prometheus.yml
 └── README.md
 ```
+
+
+
+
+
+
+
 
 ## 🤝 Contributing
 
